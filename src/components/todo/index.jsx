@@ -1,14 +1,37 @@
 import "./styles.css";
+import React, {useState, useEffect} from 'react';
 import PropTypes from "prop-types";
+import { GoTrashcan, GoCheck } from 'react-icons/go';
 
 export const Todo = (props) => {
+
+    const [isComplete, setIsComplete] = useState(false);
+
+    useEffect( () => {
+        setIsComplete(props.isComplete);
+    }, [props.isComplete]);
+
+    const toggleCompleteTodo = () => {
+        setIsComplete(!isComplete);
+    }
+
     return (
-        <div>
-            <p className="todo-text">{props.text}</p>
-            <p className="todo-date">{props.date}</p>
-            <p className="todo-color">{props.color}</p>
-            <button className="todo-complete">Complete</button>
-            <button className="todo-remove">Remove</button>
+        <div className={`todo ${props.color}`} style={isComplete ? {opacity: 0.2} : {}}>
+            <div>
+                <p className="todo-text">{props.text}</p>
+                <p className="todo-date">Due Date: {props.date}</p>
+            </div>
+            <div className="todo-buttons">
+                <button className="todo-btn todo-complete" onClick={toggleCompleteTodo}>
+                    <GoCheck className="todo-icon" style={{ fontSize:"35px" }}/>
+                </button>
+                <button className="todo-btn todo-remove">
+                    <GoTrashcan className="todo-icon" style={{fontSize:"35px"}}/>
+                </button>
+            </div>
+            
+            {/* <p className="todo-color">{props.color}</p> */}
+            
         </div>
     )
 }
