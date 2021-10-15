@@ -1,5 +1,6 @@
 import {useForm} from 'react-hook-form';
 import {Input} from '../input-field';
+import "./styles.css";
 
 export const NewTodoForm = () => {
     const {register, handleSubmit, formState: {errors}} = useForm();
