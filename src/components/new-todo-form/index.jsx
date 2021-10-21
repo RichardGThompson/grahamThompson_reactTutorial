@@ -1,12 +1,28 @@
 import {useForm} from 'react-hook-form';
 import {Input} from '../input-field';
+import {v1 as uuidv1} from 'uuid';
 import "./styles.css";
+import { useContext } from 'react';
+import {TodosContext} from '../../context/todos-context';
+import {useHistory} from 'react-router-dom';
 
 export const NewTodoForm = () => {
+    
+    const todoContext = useContext(TodosContext);
+    let history = useHistory();
+    
     const {register, handleSubmit, formState: {errors}} = useForm();
 
     const onSubmit = (data) => {
-        console.log(data);
+        const todo = data;
+
+        todo.id = uuidv1();
+
+        todo.isComplete = false;
+
+        todoContext.addTodo(todo);
+
+        history.push("/");
     }
 
     return (
